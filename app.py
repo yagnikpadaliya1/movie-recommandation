@@ -232,20 +232,31 @@ div[data-testid="stRadio"] label {{
     transition: all 0.2s ease !important;
     white-space: nowrap !important;
 }}
-div[data-testid="stRadio"] label:hover {{
+div[data-testid="stRadio"] label * {{
+    color: {TEXT_MUTED} !important;
+}}
+div[data-testid="stRadio"] label:hover,
+div[data-testid="stRadio"] label:hover * {{
     border-color: rgba(147,51,234,0.5) !important;
     color: #a855f7 !important;
     background: rgba(147,51,234,0.08) !important;
 }}
-div[data-testid="stRadio"] label[data-baseweb="radio"] span:first-child {{
+/* Hide the default radio circle */
+div[data-testid="stRadio"] label[data-baseweb="radio"] > div:first-child,
+div[data-testid="stRadio"] input[type="radio"] {{
     display: none !important;
 }}
 div[data-testid="stRadio"] [aria-checked="true"] label,
 div[data-testid="stRadio"] label:has(input:checked) {{
     background: linear-gradient(135deg,#9333ea,#ec4899) !important;
     border-color: transparent !important;
-    color: #fff !important;
     box-shadow: 0 4px 16px rgba(147,51,234,0.35) !important;
+}}
+div[data-testid="stRadio"] [aria-checked="true"] label,
+div[data-testid="stRadio"] label:has(input:checked),
+div[data-testid="stRadio"] [aria-checked="true"] label *,
+div[data-testid="stRadio"] label:has(input:checked) * {{
+    color: #fff !important;
 }}
 
 /* ── Selectbox ── */
@@ -261,6 +272,9 @@ div[data-testid="stRadio"] label:has(input:checked) {{
     backdrop-filter: blur(16px) !important;
     transition: all 0.25s ease !important;
     padding: 0.15rem 0 !important;
+}}
+.stSelectbox > div > div * {{
+    color: {TEXT} !important;
 }}
 .stSelectbox > div > div:hover {{
     border-color: rgba(147,51,234,0.6) !important;
