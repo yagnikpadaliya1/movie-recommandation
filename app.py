@@ -3,9 +3,9 @@ import pickle
 import pandas as pd
 import re
 
-# ─────────────────────────────────────────────────────────────────────────────
+
 # PAGE CONFIG
-# ─────────────────────────────────────────────────────────────────────────────
+
 st.set_page_config(
     page_title="CineMatch · AI Movie Recommender",
     page_icon="🎬",
@@ -13,9 +13,8 @@ st.set_page_config(
     initial_sidebar_state="collapsed",
 )
 
-# ─────────────────────────────────────────────────────────────────────────────
+
 # SESSION STATE
-# ─────────────────────────────────────────────────────────────────────────────
 if "dark_mode" not in st.session_state:
     st.session_state.dark_mode = True
 if "genre_filter" not in st.session_state:
@@ -23,9 +22,9 @@ if "genre_filter" not in st.session_state:
 
 IS_DARK = st.session_state.dark_mode
 
-# ─────────────────────────────────────────────────────────────────────────────
+
 # THEME TOKENS
-# ─────────────────────────────────────────────────────────────────────────────
+
 if IS_DARK:
     BG          = "#08080f"
     BG_CARD     = "rgba(255,255,255,0.04)"
@@ -55,9 +54,8 @@ else:
     SHADOW      = "rgba(0,0,0,0.15)"
     PLACEHOLDER = "https://placehold.co/500x750/ebebff/9333ea?text=No+Poster"
 
-# ─────────────────────────────────────────────────────────────────────────────
-# GLOBAL CSS — injected once
-# ─────────────────────────────────────────────────────────────────────────────
+
+# GLOBAL CSS 
 st.markdown(f"""
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@500;600;700;800&display=swap');
@@ -476,9 +474,9 @@ button[kind="secondary"] {{
 """, unsafe_allow_html=True)
 
 
-# ─────────────────────────────────────────────────────────────────────────────
+
 # DATA LOADING
-# ─────────────────────────────────────────────────────────────────────────────
+
 @st.cache_data(show_spinner=False)
 def load_data():
     movies_df   = pd.DataFrame(pickle.load(open('movies.pkl', 'rb')))
@@ -535,9 +533,9 @@ RANK_LABELS  = ['#1 Top Pick', '#2', '#3', '#4', '#5']
 RANK_CLASSES = ['rk-1', 'rk-2', 'rk-3', 'rk-4', 'rk-5']
 
 
-# ─────────────────────────────────────────────────────────────────────────────
+
 # NAV BAR
-# ─────────────────────────────────────────────────────────────────────────────
+
 st.markdown("""
 <div class="app-nav" style="position:relative;z-index:10;">
     <div class="nav-logo">
@@ -554,9 +552,9 @@ with nav_r:
         st.session_state.dark_mode = not st.session_state.dark_mode
         st.rerun()
 
-# ─────────────────────────────────────────────────────────────────────────────
+
 # HERO
-# ─────────────────────────────────────────────────────────────────────────────
+
 st.markdown(f"""
 <div class="content">
 <div class="hero-section">
@@ -576,9 +574,9 @@ st.markdown(f"""
 </div>
 """, unsafe_allow_html=True)
 
-# ─────────────────────────────────────────────────────────────────────────────
+
 # GENRE FILTER
-# ─────────────────────────────────────────────────────────────────────────────
+
 _, g_col, _ = st.columns([1, 4, 1])
 with g_col:
     selected_genre = st.radio(
@@ -589,9 +587,9 @@ with g_col:
         key="genre_radio",
     )
 
-# ─────────────────────────────────────────────────────────────────────────────
-# SEARCH + BUTTON
-# ─────────────────────────────────────────────────────────────────────────────
+
+# SEARCH BUTTON
+
 st.markdown('<div class="search-area">', unsafe_allow_html=True)
 _, s_col, _ = st.columns([1, 2.4, 1])
 with s_col:
@@ -604,14 +602,14 @@ with s_col:
     recommend_btn = st.button("✨  Get Recommendations", use_container_width=True)
 st.markdown('</div>', unsafe_allow_html=True)
 
-# ─────────────────────────────────────────────────────────────────────────────
+
 # RESULTS
-# ─────────────────────────────────────────────────────────────────────────────
+
 if recommend_btn:
     with st.spinner("Finding your perfect matches…"):
         all_recs = recommend(selected_movie, movies, similarities)
 
-    # Apply genre filter (keep first 5 matching)
+    # Apply genre filter (keep first 5 match)
     if selected_genre == 'All':
         filtered = all_recs[:5]
     else:
@@ -686,9 +684,9 @@ if recommend_btn:
 </div>
 """, unsafe_allow_html=True)
 
-# ─────────────────────────────────────────────────────────────────────────────
+
 # FOOTER
-# ─────────────────────────────────────────────────────────────────────────────
+
 st.markdown("""
 </div>  <!-- /content -->
 <div class="app-footer">
